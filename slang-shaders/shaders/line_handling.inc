@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 struct lines_t {
     // Sample locations in [0,1] coordinate space, snapped to the middle of a
     // source texel.

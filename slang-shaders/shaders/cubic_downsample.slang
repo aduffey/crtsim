@@ -1,5 +1,7 @@
 #version 450
 
+// SPDX-License-Identifier: MIT
+
 layout(set = 0, binding = 0, std140) uniform UBO {
     mat4 MVP;
 };

@@ -1,5 +1,7 @@
 #version 450
 
+// SPDX-License-Identifier: MIT
+
 layout(set = 0, binding = 0, std140) uniform UBO {
     mat4 MVP;
 };
@@ -13,7 +15,7 @@ layout(push_constant) uniform Push {
     float GlowAmount;
 } params;
 
-#include "parameters_common.inc.slang"
+#include "parameters_common.inc"
 
 #pragma stage vertex
 layout(location = 0) in vec4 Position;
