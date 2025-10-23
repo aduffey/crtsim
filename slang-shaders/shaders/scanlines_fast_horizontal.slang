@@ -57,7 +57,7 @@ layout(location = 1) flat in float delta;
 layout(location = 0) out vec4 FragColor;
 layout(binding = 1) uniform sampler2D Source;
 
-#define PI 3.1415926535897932384626433832795
+#define PI 3.141592653589793
 
 // TODO proper doc
 // Represents the convolution of the spot function over 1 texel. We can sum

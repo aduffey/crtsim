@@ -70,7 +70,7 @@ layout(location = 0) out vec4 FragColor;
 layout(binding = 1) uniform sampler2D Source;
 layout(binding = 2) uniform sampler2D Linearized;
 
-#define PI 3.1415926535897932384626433832795
+#define PI 3.141592653589793
 
 // Represents the convolution of the spot function over 1 texel. We can sum
 // several calls of this function to solve the scanline convolution in a

@@ -17,15 +17,13 @@ BlueNoiseTex_wrap_mode = repeat
 BlueNoiseTex_linear = true
 BlueNoiseTex_mipmap = false
 
-//======== Transform color space if necessary.
-shader0 = shaders/transform.slang
+//======== Simulate an s-video signal.
+shader0 = shaders/analog/to_yiq.slang
 mipmap_input0 = false
 scale_type0 = source
 scale0 = 1.0
 
-//======== Low-pass filter and sample to simulate an analog signal.
-// Also, convert to linear RGB for the next pass.
-shader1 = shaders/filter.slang
+shader1 = shaders/analog/svideo.slang
 alias1 = Filtered
 mipmap_input1 = false
 scale_type_x1 = absolute

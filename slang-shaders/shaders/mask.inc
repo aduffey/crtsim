@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 #ifndef PI
-#define PI 3.1415926535897932384626433832795
+#define PI 3.141592653589793
 #endif
 
 // This functions generates a static, subpixel-aware mask.
