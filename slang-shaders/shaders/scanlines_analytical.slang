@@ -19,6 +19,7 @@ layout(push_constant) uniform Push {
     float SubpixelMaskPattern;
     float SubpixelPattern;
     float DynamicMaskTriads;
+    float MaskMitigation;
 } params;
 
 #pragma format R16G16B16A16_SFLOAT
@@ -171,10 +172,10 @@ void main() {
 
     if (params.MaskType == 1.0) {
         vec4 mask = subpixel_aperture_grille(viewportCoord, params.OutputSize, params.SubpixelPattern, params.SubpixelMaskPattern);
-        value = blend_mask(mask.rgb, value, mask.a);
+        value = blend_mask(mask.rgb, value, mask.a, params.MaskMitigation);
     } else if (params.MaskType == 2.0) {
         vec4 mask = dynamic_aperture_grille(viewportCoord, params.OutputSize, params.DynamicMaskTriads);
-        value = blend_mask(mask.rgb, value, mask.a);
+        value = blend_mask(mask.rgb, value, mask.a, params.MaskMitigation);
     } // Otherwise, no mask
 
     FragColor.rgb = value;

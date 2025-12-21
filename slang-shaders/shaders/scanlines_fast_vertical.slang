@@ -19,6 +19,7 @@ layout(push_constant) uniform Push {
     float SubpixelMaskPattern;
     float SubpixelPattern;
     float DynamicMaskTriads;
+    float MaskMitigation;
     float OutputGamma;
 } params;
 
@@ -109,10 +110,10 @@ void main() {
 
     if (params.MaskType == 1.0) {
         vec4 mask = subpixel_aperture_grille(vTexCoord, params.OutputSize, params.SubpixelPattern, params.SubpixelMaskPattern);
-        value = blend_mask(mask.rgb, value, mask.a);
+        value = blend_mask(mask.rgb, value, mask.a, params.MaskMitigation);
     } else if (params.MaskType == 2.0) {
         vec4 mask = dynamic_aperture_grille(vTexCoord, params.OutputSize, params.DynamicMaskTriads);
-        value = blend_mask(mask.rgb, value, mask.a);
+        value = blend_mask(mask.rgb, value, mask.a, params.MaskMitigation);
     } // Otherwise, no mask
 
     if (params.OutputGamma < 0.5) {

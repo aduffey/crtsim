@@ -216,11 +216,19 @@ vec4 dynamic_aperture_grille(vec2 coord, vec4 output_size, float mask_triads) {
 //     mask: The mask to be applied to this pixel
 //     pixel_value: The rgb value of this pixel (before masking)
 //     mask_coverage: The inverse of the integral of the mask
+//     mitigation: The level of mask brightness loss mitigation to apply
+//         (ranging from 0.0 to 1.0)
 //
 // Returns:
 //     A vec3 with the rgb value of this pixel after applying the mask.
-vec3 blend_mask(vec3 mask, vec3 pixel_value, float mask_coverage) {
-    vec3 a = clamp((pixel_value - 1) / (1 - mask_coverage), vec3(0.0), pixel_value);
-    vec3 b = clamp((1 - mask_coverage * pixel_value) / (1 - mask_coverage), vec3(0.0), pixel_value);
+vec3 blend_mask(vec3 mask, vec3 pixel_value, float mask_coverage, float mitigation) {
+    // Adjust the pixel value based on the mask strength. We want the strength
+    // to range from 1 / mask_coverage (which will result in a pure mask with
+    // no brightness loss mitigation) to 1.0 (which will result in full
+    // brightness loss mitigation).
+    vec3 v = pixel_value * mix(1.0 / mask_coverage, 1.0, mitigation);
+
+    vec3 a = min((v - 1.0) / (1.0 - mask_coverage), v);
+    vec3 b = max((1.0 - mask_coverage * v) / (1.0 - mask_coverage), vec3(0.0));
     return mask_coverage * a * mask + b;
 }

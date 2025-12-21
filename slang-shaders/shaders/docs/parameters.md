@@ -46,6 +46,10 @@ The monitor subpixel pattern should be set to match the monitor. If it is not, t
 
 The subpixel mask width controls how many monitor pixels are used for each phosphor triad. For example, a value of 5.0 means that a 4k display would simulate `(2160 * (4/3)) / 5 = 576` phosphor triads across a 4:3 image.
 
+### Mask brightness loss mitigation
+
+This parameter controls the amount of mitigation for the brightness loss caused by the mask effect, basically controlling the strength of the mask. A value of 0.0 means that the mask will be full strength and the brightness will be reduced accordingly. Higher values mean that the mask will be at full strength only in the darker areas, while the brighter areas will blend in the underlying scanlines to reduce the brightness loss. At 1.0, any pixels at full brightness will have the mask completely faded out and there will be no brightness loss.
+
 ## Glow amount and width
 
 These parameters control the glow simulation. In this case, "glow" refers to the wide halos around bright parts of the image due to light scattering and refracting in the CRT glass. This is sometimes also called "bloom" or "diffusion."

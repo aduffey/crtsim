@@ -38,10 +38,16 @@ layout(binding = 1) uniform sampler2D Source;
 #include "filter.inc"
 
 void main() {
-    // TODO use line time per system
-    vec3 L = 1.0 / (vec3(params.LumaBandwidth, params.ChromaBandwidth, params.ChromaBandwidth) * 52.5 * 2.0);
+    // Systems may have different active line times, so we'll use that to
+    // adjust the kernel size for the filter.
+    chroma_info ci = get_chroma_info(params.System, params.OriginalSize, params.FrameCount);
+    float active_line_micros = ci.periods_per_active_line / CHROMA_SUBCARRIER * 1e6;  // microseconds
+    vec3 L = 1.0 / (vec3(params.LumaBandwidth, params.ChromaBandwidth, params.ChromaBandwidth) * active_line_micros * 2.0);
+
     vec3 filtered = low_pass(L, vTexCoord, params.SourceSize, Source);
+
+    // Modulate
     ivec2 texel_loc = ivec2(floor(vTexCoord * params.SourceSize.xy));
-    float carrier = chroma_carrier(vTexCoord.x, texel_loc.y, params.FrameCount, params.OriginalSize, params.System);
+    float carrier = chroma_carrier(vTexCoord.x, texel_loc.y, params.FrameCount, ci);
     FragColor.r = dot(filtered, vec3(1.0, cos(carrier), sin(carrier)));
 }
