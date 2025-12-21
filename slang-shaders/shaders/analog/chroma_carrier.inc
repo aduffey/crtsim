@@ -49,7 +49,6 @@ chroma_info chroma_info_nes(vec4 original_size, uint frame_count) {
 
     // TODO handle if upscaled
     float periods_per_active_line = 4.0 / 6.0 * original_size.x;
-    // TODO check offsets
     return chroma_info(periods_per_active_line, 682.0 / 3.0, 1.0 / 3.0);
 }
 
@@ -114,7 +113,6 @@ chroma_info chroma_info_snes(vec4 original_size, uint frame_count) {
     } else { // 256
         periods_per_active_line = 4.0 / 6.0 * original_size.x;
     }
-    // TODO check offsets
     return chroma_info(periods_per_active_line, 682.0 / 3.0, 1.0 / 3.0);
 }
 
@@ -208,33 +206,29 @@ chroma_info get_chroma_info(float system, vec4 original_size, uint frame_count) 
         // Standard
         return chroma_info_standard();
     } else if (system < 1.5) {
-        // C64
-        // TODO
-        return chroma_info_standard();
-    } else if (system < 2.5) {
         // NES
         return chroma_info_nes(original_size, frame_count);
-    } else if (system < 3.5) {
+    } else if (system < 2.5) {
         // SMS
         return chroma_info_sms(original_size);
-    } else if (system < 4.5) {
+    } else if (system < 3.5) {
         // TurboGrafx-16
         // TODO
         // See: https://pcengine.proboards.com/thread/639/screen-resolution-setup-sprite-limits?page=2
         return chroma_info_standard();
-    } else if (system < 5.5) {
+    } else if (system < 4.5) {
         // Genesis
         return chroma_info_genesis(original_size);
-    } else if (system < 6.5) {
+    } else if (system < 5.5) {
         // SNES
         return chroma_info_snes(original_size, frame_count);
-    } else if (system < 7.5) {
+    } else if (system < 6.5) {
         // Saturn
         return chroma_info_saturn(original_size);
-    } else if (system < 8.5) {
+    } else if (system < 7.5) {
         // PS1
         return chroma_info_psx();
-    } else if (system < 9.5) {
+    } else if (system < 8.5) {
         // N64
         return chroma_info_n64();
     }
